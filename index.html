@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cine Center</title>
+    <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+<body>
+    
+    <header class="page-header">
+        <h1 class="header-info"><button class="js-display-content-button header-button">Search</button> movie <span class="header-info-swap">News</span></h1>
+    </header>
+
+    <main class="movie-content" hidden>
+        <section class="trailer-content" >
+            <h2 class="content-header">Latest Trailers</h2>
+        </section>
+        <section class="in-theaters-content" >
+            <h2 class="content-header">Search Theaters/VOD</h2>
+            <form class="now-playing-form">
+                <select class="userInput">
+                    <option value="now_playing">Now Playing</option>
+                    <option value="upcoming">Coming Soon</option>
+                    <option value="popular">Popular</option>
+                </select>
+                <button class="js-now_playing-button now_playing-button" type="submit">Search</button>
+            </form>
+            <div class="now-playing-content"></div>
+        </section>
+        <section class="search-content" >
+            <form class="js-search-form">
+                <input class="js-searchBar" type="search" placeholder="The 400 Blows"></input>
+                <button class="js-search-button" type="submit">Get Reccommendations</button>
+            </form>
+            <div class="reccommendations-page"></div>
+        </section>
+        <section class="news-content" ></section>
+    </main>
+    <footer class="page-footer" hidden></footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="app.js" type="text/javascript"></script>
+</body>
+</html>
