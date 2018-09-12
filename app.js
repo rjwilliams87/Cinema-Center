@@ -45,7 +45,7 @@ function renderVideoResults(results){
     return `
     <div class="movie-trailer-thumbnail">
       <h3 class="trailer-title">${results.snippet.title}</h3>
-      <img src="${results.snippet.thumbnails.medium.url}">
+      <iframe width="400" height="200" src="https://www.youtube.com/embed/${results.snippet.resourceId.videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
     `;
   }
