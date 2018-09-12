@@ -136,7 +136,7 @@ function renderTMDBResults (results){
   }
 
   function handleDisplayContentButton(){
-      $('.js-display-content-button').click(function(e){
+      $('.js-scroll-to-content').click(function(e){
           e.preventDefault();
       })
   }
@@ -145,3 +145,5 @@ function renderTMDBResults (results){
   handleNowPlayingSearchButton();
   handleSearchMovieButton();
   handleReccommendationButton();
+
+
