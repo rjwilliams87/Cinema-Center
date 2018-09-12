@@ -13,29 +13,33 @@
         <h1 class="header-info"><button class="js-display-content-button header-button">Search</button> movie <span class="header-info-swap">News</span></h1>
     </header>
 
-    <main class="movie-content" hidden>
-        <section class="trailer-content" >
-            <h2 class="content-header">Latest Trailers</h2>
+    <main class="movie-content">
+        <section class="trailer-box" >
+            <h2 class="content-header">Watch the latest trailers</h2>
+            <div class="trailer-content"></div>
         </section>
-        <section class="in-theaters-content" >
-            <h2 class="content-header">Search Theaters/VOD</h2>
-            <form class="now-playing-form">
-                <select class="userInput">
-                    <option value="now_playing">Now Playing</option>
-                    <option value="upcoming">Coming Soon</option>
-                    <option value="popular">Popular</option>
-                </select>
-                <button class="js-now_playing-button now_playing-button" type="submit">Search</button>
-            </form>
-            <div class="now-playing-content"></div>
-        </section>
-        <section class="search-content" >
-            <form class="js-search-form">
-                <input class="js-searchBar" type="search" placeholder="The 400 Blows"></input>
-                <button class="js-search-button" type="submit">Get Reccommendations</button>
-            </form>
-            <div class="reccommendations-page"></div>
-        </section>
+        <div class="search-area-wrapper">
+            <section class="in-theaters-content" >
+                <h2 class="content-header">See what's playing/coming soon for Theaters/VOD</h2>
+                <form class="now-playing-form">
+                    <select class="userInput">
+                        <option value="now_playing">Now Playing</option>
+                        <option value="upcoming">Coming Soon</option>
+                        <option value="popular">Popular</option>
+                    </select>
+                    <button class="js-now_playing-button now_playing-button" type="submit">Search</button>
+                </form>
+                <div class="now-playing-content"></div>
+            </section>
+            <section class="search-content" >
+                <h2 class="content-header">Search movies and get reccommendations</h2>
+                <form class="js-search-form">
+                    <input class="js-searchBar" type="search" placeholder="The 400 Blows"></input>
+                    <button class="js-search-button" type="submit">Get Reccommendations</button>
+                </form>
+                <div class="reccommendations-page"></div>
+            </section>
+        </div>
         <section class="news-content" ></section>
     </main>
     <footer class="page-footer" hidden></footer>
