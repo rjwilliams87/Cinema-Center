@@ -138,7 +138,10 @@ function renderTMDBResults (results){
   function handleDisplayContentButton(){
       $('.js-scroll-to-content').click(function(e){
           e.preventDefault();
-      })
+          $('html,body').animate({
+              scrollTop: $('.movie-content').offset().top
+          }, 800);
+      });
   }
 
   handleDisplayContentButton();
