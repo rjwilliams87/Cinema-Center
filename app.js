@@ -141,6 +141,12 @@ function renderTMDBResults (results){
       })
   }
 
+  function displayMovieDetails(){
+      $('.search-area-wrapper').on('click', '.movie-details', function(e){
+          e.preventDefault();
+        });
+  }
+
   handleDisplayContentButton();
   handleNowPlayingSearchButton();
   handleSearchMovieButton();
