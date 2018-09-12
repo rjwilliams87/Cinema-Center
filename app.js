@@ -136,9 +136,12 @@ function renderTMDBResults (results){
   }
 
   function handleDisplayContentButton(){
-      $('.js-display-content-button').click(function(e){
+      $('.js-scroll-to-content').click(function(e){
           e.preventDefault();
-      })
+          $('html,body').animate({
+              scrollTop: $('.movie-content').offset().top
+          }, 800);
+      });
   }
 
   function displayMovieDetails(){
@@ -151,3 +154,5 @@ function renderTMDBResults (results){
   handleNowPlayingSearchButton();
   handleSearchMovieButton();
   handleReccommendationButton();
+
+
