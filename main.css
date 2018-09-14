@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 .page-header{
@@ -52,11 +53,13 @@
 }
 
 .movie-content{
-
+   
 }
 
 .content-header{
-    margin: 5px 15px;
+    /*background-color: #0099ff;*/
+    background-color: #00AAFF;
+    width: 100%;
 }
 
 .trailer-content{
@@ -67,23 +70,31 @@
 
 .trailer-box{
     text-align: center;
+    border: 1px solid black;
+    width: 100%;
 }
 
 .movie-trailer-thumbnail{
-    padding: 5px; 
-    margin: 5px 2px; 
+    margin: 5px 0px; 
 }
+
+
 
 .in-theaters-content{
     text-align: center;
+    border: 1px solid black;
+    margin-top: 20px;
 }
 
 .now-playing-content, .reccommendations-page{
     text-align: center;
     display: flex;
+    
+    align-items: center;
+    max-height: 568px;
     max-width: 620px; 
-    border: 1px solid black;
-    overflow: hidden;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 .now-playing-form{
@@ -92,27 +103,81 @@
 
 .poster-image{
     width: 275px;
+    margin: 5px;
+    display: block;
+}
+
+.poster-image:hover, .poster-image:focus{
+    cursor: pointer;
+}
+
+.movie-details h3,.movie-details p{
+    margin: 10px 5px; 
+}
+
+.movie-details__bold{
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.movie-details-header{
+    text-align: center;
+}
+
+.exit{
+    margin: auto;
+    width: 100px; 
+    font-weight: 700;
 }
 
 .in-theaters-info{
     margin: 10px 2px; 
 }
 
-.search-content{
-    margin: 10px; 
-    text-align: center;
+.search-results, .in-theaters-info{
+    /*border-top: 1px solid gray;*/
+    border-bottom: 1px solid gray;
 }
 
-.reccommendations-page{
-    display: flex;
+.search-results{
+    margin: 10px 0;
+}
+
+.search-content{ 
+    text-align: center;
+    border: 1px solid black;
+    margin-top: 20px;
+}
+
+.reccommend-button{
+    
 }
 
 .news-content{
 
 }
 
+.search-area-wrapper{
+    margin-bottom: 10px; 
+}
+
 .page-footer{
 
+}
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 812px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: landscape){
+    .header-image{
+        margin-top: 10px; 
+    }
+
+    .poster-image{
+        height: 200px; 
+        width: 150px
+    }
 }
 
 @media only screen and (min-width: 695px){
@@ -124,26 +189,109 @@
         height: 275px;
     }
 
+    .movie-trailer-thumbnail{
+        padding: 5px; 
+        margin: 5px 2px; 
+    }
+
     .search-area-wrapper{
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-around;
     }
 
     .now-playing-content, .reccommendations-page{
+        flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        max-width: 550px;
-        max-height: 600px;
-        border: 1px solid black;
+        width: 550px;
+        max-height: 450px;
         overflow: hidden;
         margin: 20px; 
         overflow-y: scroll;
     }
+    
+    .in-theaters-content:hover,
+    .in-theaters-content:focus,
+    .search-content:hover,
+    .search-content:focus,
+    .trailer-box:hover,
+    .trailer-box:focus{
+        box-shadow: 6px -5px 5px 0 gray;
+    }
+
+    .search-results, .in-theaters-info{
+        height: 415px;
+    }
+
+    .in-theaters-content, .search-content{
+        max-height: 575px;
+    }
+
+    .poster-header{
+        width: 250px;
+        height: 65px; 
+    }
 
     .poster-image{
         width: 200px; 
-        display: block;
+        /*display: block;*/
+        margin-bottom: 10px; 
+    }
+
+    .trailer-box{
+        text-align: center;
+        border: 1px solid black;
+        width: 96%;
+        margin: 20px auto;
+    }
+
+    .userInput{
+        width: 125px; 
+        font-size: 16px;
+    }
+
+    .search-input{
+        width: 200px; 
+        font-size: 16px;
+    }
+
+    .now_playing-button, .search-button{
+        font-size: 16px;
+    }
+
+    .search-form{
+        margin-top: 10px; 
     }
 }
 
-/* header animation */
+/* test lightbox */
+.media-wrapper{
+    width: 100%;
+    height: 100%;
+  }
+  
+  #wrapper{
+    position: fixed; 
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.7;
+    display: flex;
+    justify-content: center;
+  }
+  
+  #lightbox{
+    position: fixed;
+    top: 0;
+    margin: 100px auto;
+    width: 400px; 
+    max-height: 500px;  
+    border: 1px solid black;
+    border-radius: 3px; 
+    background-color: white;
+    display: none;
+    z-index: 10;
+  }

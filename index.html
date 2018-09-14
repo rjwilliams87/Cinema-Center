@@ -6,9 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cine Center</title>
     <link rel="stylesheet" href="main.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
-    
+    <div class="media-wrapper">
     <header class="page-header">
             <img class="header-image" src="https://cdn.pixabay.com/photo/2015/12/09/22/24/filmklappe-1085692_1280.png">
             <h1 class="main-header">Cinema Center</h1>
@@ -22,8 +23,8 @@
         </section>
         <div class="search-area-wrapper">
             <section class="in-theaters-content" >
-                <h2 class="content-header">See what's playing/coming soon for Theaters/VOD</h2>
-                <form class="now-playing-form">
+                <h2 class="content-header">Explore new and upcoming releases</h2>
+                <form class="now-playing-form search-form">
                     <select class="userInput">
                         <option value="now_playing">Now Playing</option>
                         <option value="upcoming">Coming Soon</option>
@@ -31,20 +32,21 @@
                     </select>
                     <button class="js-now_playing-button now_playing-button" type="submit">Search</button>
                 </form>
-                <div class="now-playing-content"></div>
+                <div class="now-playing-content clickable-content"></div>
             </section>
             <section class="search-content" >
                 <h2 class="content-header">Search movies and get reccommendations</h2>
-                <form class="js-search-form">
-                    <input class="js-searchBar" type="search" placeholder="The 400 Blows"></input>
-                    <button class="js-search-button" type="submit">Get Reccommendations</button>
+                <form class="js-search-form search-form">
+                    <input class="js-searchBar search-input" type="search" placeholder="Star Wars"></input>
+                    <button class="js-search-button search-button" type="submit">Search Movies</button>
                 </form>
-                <div class="reccommendations-page"></div>
+                <div class="reccommendations-page clickable-content"></div>
             </section>
         </div>
-        <section class="news-content" ></section>
+        <section class="news-content "></section>
     </main>
     <footer class="page-footer" hidden></footer>
+</div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="app.js" type="text/javascript"></script>

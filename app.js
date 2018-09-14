@@ -1,10 +1,9 @@
 'use strict';
 
-const state = {
+const apiStore = {
     YouTube: {
         URL: `https://www.googleapis.com/youtube/v3/playlistItems`,
         settings: {
-            //channedId: 'UCi8e0iOVk1fEOogdfu4YgfA',
             maxResults: 10,
             playlistId: `PLScC8g4bqD47swdFI0NWMS7FPfjE6Nswy`,
             part: 'snippet',
@@ -23,29 +22,23 @@ const state = {
                 page: 1,
               }
     },
-    News: {
-        URL: `https://newsapi.org/v2/everything`,
-        api_key: `6075e1b5ab43474aaeb5bd5bc6f0b466`,
-    }
 };
 
-$(document).ready(function(){
-    getYouTubeApiData(displayYoutubeData);
-    getTMDBPlayingData(`now_playing`, displayPlayingData);
-    getTMDBReccommendationResults(205, displayTMDBSearchData);
-});
+//need to save query selectors as varialbes
+//refactor URL for TMDB and functions --> the movieDisplay Function has local URL
+//Lightbox in own function?
+//add tooltip for poster-images
 
 // youtube api
-
 function getYouTubeApiData(callback){
-    $.getJSON(state.YouTube.URL, state.YouTube.settings, callback);
+    $.getJSON(apiStore.YouTube.URL, apiStore.YouTube.settings, callback);
   }
 
 function renderVideoResults(results){
     return `
     <div class="movie-trailer-thumbnail">
       <h3 class="trailer-title">${results.snippet.title}</h3>
-      <iframe width="400" height="200" src="https://www.youtube.com/embed/${results.snippet.resourceId.videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe class="trailer" height="200" width="400" src="https://www.youtube.com/embed/${results.snippet.resourceId.videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     </div>
     `;
   }
@@ -56,26 +49,36 @@ function displayYoutubeData(data){
   }
 
   //TMDB api
+
+function fetch(url, callback){
+    $.getJSON(url, apiStore.TMDB.settings, callback)
+}  
+
 function getTMDBPlayingData(searchTerm, callback){
-       $.getJSON(state.TMDB.URL+`${searchTerm}`, state.TMDB.settings, callback);
+       $.getJSON(apiStore.TMDB.URL+`${searchTerm}`, apiStore.TMDB.settings, callback);
    }
 
 function getTMDBSearchResults(searchTerm, callback){
-  state.TMDB.settings.query = `${searchTerm}`;
-  $.getJSON(state.TMDB.Search_URL, state.TMDB.settings, callback);
+  apiStore.TMDB.settings.query = `${searchTerm}`;
+  $.getJSON(apiStore.TMDB.Search_URL, apiStore.TMDB.settings, callback);
 }
 
 function getTMDBReccommendationResults(id, callback){
     const URL_SearchId = `${id}/recommendations`;
-    $.getJSON(state.TMDB.URL+URL_SearchId, state.TMDB.settings, callback);
+    $.getJSON(apiStore.TMDB.URL+URL_SearchId, apiStore.TMDB.settings, callback);
   }
+
+function getTMDBMovieDetails(id, callback){
+  const URL = `https://api.themoviedb.org/3/movie/${id}`;
+  $.getJSON(URL, apiStore.TMDB.settings, callback);
+}
 
   function renderTMDBSearchResults(results){
     return `
       <div class="search-results">
-        <h2>${results.title}</h2>
-        <img class="poster-image" src="https://image.tmdb.org/t/p/w300/${results.poster_path}"/>
-        <button id=${results.id} class="js-search-reccommended-button reccommend-button" type="submit">Search Reccommendations</button>
+        <h2 class="poster-header">${results.title}</h2>
+        <img id=${results.id} class="poster-image" src="https://image.tmdb.org/t/p/w300/${results.poster_path}"/>
+        <button id=${results.id} class="js-search-reccommended-button reccommend-button" type="submit">Explore Similar Titles</button>
       </div>
     `;
   }
@@ -83,14 +86,25 @@ function getTMDBReccommendationResults(id, callback){
 function renderTMDBResults (results){
     return  `
     <div class="in-theaters-info">
-        <a class="movie-details" href="#">
-        <h2>${results.title}</h2>
-        <img class="poster-image" src="https://image.tmdb.org/t/p/w300/${results.poster_path}">
-        </a>
+        <h2 class="poster-header">${results.title}</h2>
+        <img id=${results.id} class="poster-image" src="https://image.tmdb.org/t/p/w300/${results.poster_path}">
         <p>Release Date: ${results.release_date}</p>
     </div>
     `;
   }
+
+function renderTMDBMovieDetails(results){
+  return `
+  <div class="movie-details">
+    <h3 class="movie-details-header">${results.title}</h3>
+    <p><span class="movie-details__bold">Release date:</span> ${results.release_date}</p>
+    <p><span class="movie-details__bold">Runtime:</span> ${results.runtime} minutes</p>
+    <p><span class="movie-details__bold">TMDB Average Score:</span> ${results.vote_average}</p>
+    <p><span class="movie-details__bold">Overview:</span> ${results.overview}</p>
+    <button class="exit">Exit</button>
+  </div>
+  `;
+}
 
   function displayTMDBSearchData(data){
     let dataArray = [];
@@ -107,6 +121,11 @@ function renderTMDBResults (results){
       const results = data.results.map((item)=> renderTMDBResults(item));
       $('.now-playing-content').html(results);
   }
+
+function displayMovieDetailsData(data){
+  const results = renderTMDBMovieDetails(data);
+  $('#lightbox').html(results);
+}
 
   function handleNowPlayingSearchButton(){
       $('.now-playing-form').submit(function(e){
@@ -135,7 +154,7 @@ function renderTMDBResults (results){
     })
   }
 
-  function handleDisplayContentButton(){
+  function handleScrollButton(){
       $('.js-scroll-to-content').click(function(e){
           e.preventDefault();
           $('html,body').animate({
@@ -144,15 +163,40 @@ function renderTMDBResults (results){
       });
   }
 
-  function displayMovieDetails(){
-      $('.search-area-wrapper').on('click', '.movie-details', function(e){
-          e.preventDefault();
-        });
+  //lightbox
+  function handleInformationDisplay(){
+    $('.clickable-content').on('click', '.poster-image', function(event){
+      event.preventDefault();
+      const movieId = $(this).attr('id');
+      //Should lightbox appending be own function?
+      $('.media-wrapper').append(`<div id="wrapper"></div>`);
+      $('#wrapper').fadeIn(function(){
+        $('.search-area-wrapper').append(`<div id="lightbox"></div>`);
+        $('#lightbox').fadeIn();
+        getTMDBMovieDetails(movieId, displayMovieDetailsData);
+      });
+    });
   }
 
-  handleDisplayContentButton();
-  handleNowPlayingSearchButton();
-  handleSearchMovieButton();
-  handleReccommendationButton();
+  function handleExitButton(){
+    $('body').on('click', '.exit', function(e){
+      e.preventDefault();
+      $('#lightbox').fadeOut(function(){
+        $('#wrapper').remove();
+      });
+    })
+  }
+  
+  
+$(document).ready(function(){
+    getYouTubeApiData(displayYoutubeData);
+    getTMDBPlayingData(`now_playing`, displayPlayingData);
+    getTMDBReccommendationResults(140607, displayTMDBSearchData);
+});
 
-
+handleScrollButton();
+handleNowPlayingSearchButton();
+handleSearchMovieButton();
+handleReccommendationButton();
+handleExitButton();
+handleInformationDisplay();
