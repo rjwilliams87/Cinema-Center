@@ -4,7 +4,7 @@ const apiStore = {
     YouTube: {
         URL: `https://www.googleapis.com/youtube/v3/playlistItems`,
         settings: {
-            maxResults: 10,
+            maxResults: 9,
             playlistId: `PLScC8g4bqD47swdFI0NWMS7FPfjE6Nswy`,
             part: 'snippet',
             key: `AIzaSyBG6fsTfidnse58wUOpgcJ9d6PL9QiSMaM`, 
@@ -13,7 +13,7 @@ const apiStore = {
           }
     },
     TMDB: {
-        URL: `https://api.themoviedb.org/3/movie/`,
+        URL: `https://api.themoviedb.org/3/movie`,
         Search_URL: `https://api.themoviedb.org/3/search/movie`,
         settings: 
             {
@@ -24,107 +24,95 @@ const apiStore = {
     },
 };
 
-//need to save query selectors as varialbes
-//refactor URL for TMDB and functions --> the movieDisplay Function has local URL
-//Lightbox in own function?
-//add tooltip for poster-images
+// variables
+  const trailerPage = $('.trailer-content');
+  const playlistButton = $('.js-playlist-btn');
+  const recommendedPage = $('.recommendations-page');
+  const inTheatersPage = $('.now-playing-content');
+  const lightboxDisplay = $('.lightbox');
+  const lightboxWrapper = $('#wrapper');
 
 // youtube api
 function getYouTubeApiData(callback){
     $.getJSON(apiStore.YouTube.URL, apiStore.YouTube.settings, callback);
   }
 
-function renderVideoResults(results){
+function renderVideoResults(result){
     return `
     <div class="movie-trailer-thumbnail">
-      <h3 class="trailer-title">${results.snippet.title}</h3>
-      <iframe class="trailer" height="200" width="400" src="https://www.youtube.com/embed/${results.snippet.resourceId.videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <iframe class="trailer" height="200" width="400" src="https://www.youtube.com/embed/${result.snippet.resourceId.videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen
+      title="${result.snippet.title}" alt="movie trailer" aria-label=${result.snippet.title}></iframe>
     </div>
     `;
   }
 
 function displayYoutubeData(data){
-    const results = data.items.map((item) => renderVideoResults(item));
-    $('.trailer-content').append(results);
+    const videoResults = data.items.map((item) => renderVideoResults(item));
+    trailerPage.html(videoResults);
   }
 
-  //TMDB api
+function handleYouTubePlaylistButton(){
+  playlistButton.click(function(e){
+    e.preventDefault();
+    const playlistId = $(this).attr('id')
+    apiStore.YouTube.settings.playlistId = `${playlistId}`;
+    getYouTubeApiData(displayYoutubeData);
+  })
+}
 
 function fetch(url, callback){
     $.getJSON(url, apiStore.TMDB.settings, callback)
 }  
 
-function getTMDBPlayingData(searchTerm, callback){
-       $.getJSON(apiStore.TMDB.URL+`${searchTerm}`, apiStore.TMDB.settings, callback);
-   }
-
-function getTMDBSearchResults(searchTerm, callback){
-  apiStore.TMDB.settings.query = `${searchTerm}`;
-  $.getJSON(apiStore.TMDB.Search_URL, apiStore.TMDB.settings, callback);
-}
-
-function getTMDBReccommendationResults(id, callback){
-    const URL_SearchId = `${id}/recommendations`;
-    $.getJSON(apiStore.TMDB.URL+URL_SearchId, apiStore.TMDB.settings, callback);
-  }
-
-function getTMDBMovieDetails(id, callback){
-  const URL = `https://api.themoviedb.org/3/movie/${id}`;
-  $.getJSON(URL, apiStore.TMDB.settings, callback);
-}
-
-  function renderTMDBSearchResults(results){
+  function renderTMDBSearchResults(result){
+    const {title, id, poster_path} = result;
     return `
       <div class="search-results">
-        <h2 class="poster-header">${results.title}</h2>
-        <img id=${results.id} class="poster-image" src="https://image.tmdb.org/t/p/w300/${results.poster_path}"/>
-        <button id=${results.id} class="js-search-reccommended-button reccommend-button" type="submit">Explore Similar Titles</button>
+        <h2 class="poster-header">${title}</h2>
+        <a href="#" id="${id}" title="Click for more info"><img class="poster-image" src="https://image.tmdb.org/t/p/w300/${poster_path}" alt="poster ${title}"/></a>
+        <button id="movie${id}" class="js-search-recommended-button recommend-button" type="submit">View Similar Titles</button>
       </div>
     `;
   }
 
-function renderTMDBResults (results){
+function renderTMDBResults (result){
+  const {title, id, release_date, poster_path} = result;
     return  `
     <div class="in-theaters-info">
-        <h2 class="poster-header">${results.title}</h2>
-        <img id=${results.id} class="poster-image" src="https://image.tmdb.org/t/p/w300/${results.poster_path}">
-        <p>Release Date: ${results.release_date}</p>
+        <h2 class="poster-header">${title}</h2>
+        <a href="#" id="${id}" title="click for more info"><img class="poster-image" src="https://image.tmdb.org/t/p/w300/${poster_path}" alt="poster ${title}"></a>
     </div>
     `;
   }
 
-function renderTMDBMovieDetails(results){
+function renderTMDBMovieDetails(result){
+  const {title, vote_average, runtime, release_date, overview} = result
   return `
   <div class="movie-details">
-    <h3 class="movie-details-header">${results.title}</h3>
-    <p><span class="movie-details__bold">Release date:</span> ${results.release_date}</p>
-    <p><span class="movie-details__bold">Runtime:</span> ${results.runtime} minutes</p>
-    <p><span class="movie-details__bold">TMDB Average Score:</span> ${results.vote_average}</p>
-    <p><span class="movie-details__bold">Overview:</span> ${results.overview}</p>
-    <button class="exit">Exit</button>
+    <h3 class="movie-details-header" tabindex="0">${title}</h3>
+    <p><span class="movie-details__bold">Release date:</span> ${release_date}</p>
+    <p><span class="movie-details__bold">Runtime:</span> ${runtime} minutes</p>
+    <p><span class="movie-details__bold">TMDB Average Score:</span> ${vote_average}</p>
+    <p><span class="movie-details__bold">Overview:</span> ${overview}</p>
+    <button class="exit-btn" aria-label="press esc button to exit">Exit (esc)</button>
   </div>
   `;
 }
 
   function displayTMDBSearchData(data){
-    let dataArray = [];
-    for (let i = 0; i < 6; i++){
-      if (data.results[i]){
-      dataArray.push(data.results[i]);
-      }
-    }
-    const searchResults = dataArray.map((item)=> renderTMDBSearchResults(item)).join('');
-    $('.reccommendations-page').html(searchResults);
+    const searchResults = data.results.map((item, index)=> 
+        renderTMDBSearchResults(item));
+        recommendedPage.html(searchResults);
   }
 
   function displayPlayingData(data){
-      const results = data.results.map((item)=> renderTMDBResults(item));
-      $('.now-playing-content').html(results);
+      const newReleaseResults = data.results.map((item)=> renderTMDBResults(item)).sort();
+      inTheatersPage.html(newReleaseResults);
   }
 
 function displayMovieDetailsData(data){
   const results = renderTMDBMovieDetails(data);
-  $('#lightbox').html(results);
+  $('.lightbox').html(results);
 }
 
   function handleNowPlayingSearchButton(){
@@ -132,7 +120,7 @@ function displayMovieDetailsData(data){
           e.preventDefault();
           const queryTarget = $(this).find('.userInput');
           const query = queryTarget.val();
-          getTMDBPlayingData(query, displayPlayingData);
+          fetch(`${apiStore.TMDB.URL}/${query}`, displayPlayingData);
       })
   }
 
@@ -142,15 +130,16 @@ function displayMovieDetailsData(data){
       const queryTarget = $(this).find('.js-searchBar');
       const query = queryTarget.val();
       queryTarget.val('');
-      getTMDBSearchResults(query, displayTMDBSearchData);
+      apiStore.TMDB.settings.query = query;
+      fetch(apiStore.TMDB.Search_URL, displayTMDBSearchData);
     });
   }
   
-  function handleReccommendationButton(){
-    $('.reccommendations-page').on('click', '.js-search-reccommended-button', function(e){
+  function handlerecommendationButton(){
+    recommendedPage.on('click', '.js-search-recommended-button', function(e){
       e.preventDefault();
-      const movieId = $(this).attr('id');
-      getTMDBReccommendationResults(movieId, displayTMDBSearchData);
+      const movieId = $(this).attr('id').match(/\d+/g).join('');
+      fetch(`${apiStore.TMDB.URL}/${movieId}/recommendations`, displayTMDBSearchData);
     })
   }
 
@@ -163,40 +152,48 @@ function displayMovieDetailsData(data){
       });
   }
 
-  //lightbox
   function handleInformationDisplay(){
-    $('.clickable-content').on('click', '.poster-image', function(event){
+    $('.clickable-content').on('click', 'a', function(event){
       event.preventDefault();
       const movieId = $(this).attr('id');
-      //Should lightbox appending be own function?
       $('.media-wrapper').append(`<div id="wrapper"></div>`);
       $('#wrapper').fadeIn(function(){
-        $('.search-area-wrapper').append(`<div id="lightbox"></div>`);
-        $('#lightbox').fadeIn();
-        getTMDBMovieDetails(movieId, displayMovieDetailsData);
+        $('.search-area-wrapper').append(`<div class="lightbox" aria-live="assertive"></div>`);
+        $('.lightbox').fadeIn();
+        fetch(`https://api.themoviedb.org/3/movie/${movieId}`, displayMovieDetailsData);
       });
     });
   }
 
   function handleExitButton(){
-    $('body').on('click', '.exit', function(e){
+    $('body').on('click', '.exit-btn', function(e){
       e.preventDefault();
-      $('#lightbox').fadeOut(function(){
+      $('.lightbox').fadeOut(function(){
         $('#wrapper').remove();
       });
-    })
+    });
   }
-  
+
+function handleLightboxEscButton(){
+  $('body').keyup(function(e){
+    if (e.which == 27) {
+      $('.lightbox').fadeOut(function(){
+        $('#wrapper').remove()});
+    }
+  });
+}
   
 $(document).ready(function(){
     getYouTubeApiData(displayYoutubeData);
-    getTMDBPlayingData(`now_playing`, displayPlayingData);
-    getTMDBReccommendationResults(140607, displayTMDBSearchData);
+    fetch(`${apiStore.TMDB.URL}/now_playing`, displayPlayingData);
+    fetch(`${apiStore.TMDB.URL}/140607/recommendations`, displayTMDBSearchData);
 });
 
+handleYouTubePlaylistButton();
 handleScrollButton();
 handleNowPlayingSearchButton();
 handleSearchMovieButton();
-handleReccommendationButton();
+handlerecommendationButton();
 handleExitButton();
 handleInformationDisplay();
+handleLightboxEscButton();
