@@ -1,34 +1,35 @@
 # Cinema Center
 A single web page to watch the latest movie trailers, get information about new releases and find movie recommendations. 
 
-##Inspiration
+Inspiration
+============
 I've spent countless amounts of time searching various resources to find information about the latest movies. "When is the release
 date?" "How long is it?" "What's the viewer rating?" Cinema Center makes it easy for users to get all the information they need about
 the latest movies.
 
 ##Screenshots
 ###Desktop
-![fullpage screenshot](cinecenter_photos/fullscreen.png "Desktop layout")
+![fullpage screenshot](/cinecenter_photos/fullscreen.png "Desktop layout")
 
 Playlist search area
-![playlist selection screen desktop](cinecenter_photos/playlistdesktopscreencapture.png "playlist selection")
+![playlist selection screen desktop](/cinecenter_photos/playlistdesktopscreencapture.png "playlist selection")
 
 Explore new releases or search for your favorite movie
-![search area screen desktop](cinecenter_photos/search_nowplayingdesktopscreenshot.png "Search and explore movies")
+![search area screen desktop](/cinecenter_photos/search_nowplayingdesktopscreenshot.png "Search and explore movies")
 
 Click posters to get more information about the selected movie
-![lightbox pop up with informational text](cinecenter_photos/infodisplayscreenshot.png "Lightbox movie information")
+![lightbox pop up with informational text](/cinecenter_photos/infodisplayscreenshot.png "Lightbox movie information")
 
 ###Mobile
 ####Potrait
-![portrait landing page](cinecenter_photos/landingmobile.png "Landing page")
+![portrait landing page](/cinecenter_photos/landingmobile.png "Landing page")
 
-![potrait search area with movie posters](cinecenter_photos/mobilesearchscreencapture.png "Potrait search movies area")
+![potrait search area with movie posters](/cinecenter_photos/mobilesearchscreencapture.png "Potrait search movies area")
 
 ####Landscape
-![landing page in landscape with welcome text](cinecenter_photos/landingmobilelandscape.png "Landscape landing page")
+![landing page in landscape with welcome text](/cinecenter_photos/landingmobilelandscape.png "Landscape landing page")
 
-![playlist area in landscape with clickable movie trailers](cinecenter_photos/playlistlandscape.png "Landscape playlist area")
+![playlist area in landscape with clickable movie trailers](/cinecenter_photos/playlistlandscape.png "Landscape playlist area")
 
 ##Built with
 *HTML
