@@ -24,7 +24,6 @@ const apiStore = {
     },
 };
 
-
 function getYouTubeApiData(callback){
     $.getJSON(apiStore.YouTube.URL, apiStore.YouTube.settings, callback);
   }
@@ -49,6 +48,7 @@ function handleYouTubePlaylistButton(){
     const playlistId = $(this).attr('id')
     apiStore.YouTube.settings.playlistId = `${playlistId}`;
     getYouTubeApiData(displayYoutubeData);
+    searchResultsScrollAnimation($('.trailer-content'))
   })
 }
 
@@ -110,6 +110,7 @@ function handleNowPlayingSearchButton(){
     const queryTarget = $(this).find('.userInput');
     const query = queryTarget.val();
     fetch(`${apiStore.TMDB.URL}/${query}`, displayPlayingData);
+    searchResultsScrollAnimation($('.now-playing-content'));
   });
 }
 
@@ -121,6 +122,7 @@ function handleSearchMovieButton(){
     queryTarget.val('');
     apiStore.TMDB.settings.query = query;
     fetch(apiStore.TMDB.Search_URL, displayTMDBSearchData);
+    searchResultsScrollAnimation($('.recommendations-page'));
   });
 }
   
@@ -129,6 +131,7 @@ function handlerecommendationButton(){
     e.preventDefault();
     const movieId = $(this).attr('id').match(/\d+/g).join('');
     fetch(`${apiStore.TMDB.URL}/${movieId}/recommendations`, displayTMDBSearchData);
+    searchResultsScrollAnimation($('.recommendations-page'));
   });
 }
 
@@ -163,13 +166,17 @@ function handleLightboxEscButton(){
   });
 }
 
-function handleScrollButton(){
+function handleHomeScrollButton(){
   $('.js-scroll-to-content').click(function(e){
       e.preventDefault();
       $('html,body').animate({
           scrollTop: $('.movie-content').offset().top
       }, 800);
   });
+}
+
+function searchResultsScrollAnimation(element){
+  element.animate({scrollTop: 0}, 800);
 }
   
 $(document).ready(function(){
@@ -179,7 +186,7 @@ $(document).ready(function(){
 });
 
 handleYouTubePlaylistButton();
-handleScrollButton();
+handleHomeScrollButton();
 handleNowPlayingSearchButton();
 handleSearchMovieButton();
 handlerecommendationButton();
