@@ -4,7 +4,7 @@ const apiStore = {
     YouTube: {
         URL: `https://www.googleapis.com/youtube/v3/playlistItems`,
         settings: {
-            maxResults: 9,
+            maxResults: 10,
             playlistId: `PLScC8g4bqD47swdFI0NWMS7FPfjE6Nswy`,
             part: 'snippet',
             key: `AIzaSyBG6fsTfidnse58wUOpgcJ9d6PL9QiSMaM`, 

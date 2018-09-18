@@ -5,6 +5,10 @@
     font-family: 'Roboto', sans-serif;
 }
 
+body{
+    min-width: 320px; 
+}
+
 .media-wrapper{
     background-color: #ECE2D0;
     color: #0C4767;
@@ -48,7 +52,7 @@
 }
 
 .trailer-box{
-    width: 305px;
+    width: 85vw;
     text-align: center;
     background-color: white;
     margin: 0 auto;
@@ -57,24 +61,28 @@
 
 .content-header{
     width: 100%;
+    padding-top: 20px;
 }
 
 .content-header__border{
     width: 95%;
+    padding-top: 0;
+    padding-bottom: 5px; 
     border-bottom: 3px dotted rgba(127,209,185);
 }
 
 .playlist-nav{
-    margin-top: 10px; 
-    display: inline-block;
+    margin: 10px auto 0 auto; 
+    display: block;
     text-decoration: none;
     border: 2px solid #0C4767;
     color: #0C4767;
-    font-size: 20px;
+    font-size: 18px;
     width: 150px;
-    padding: 5px; 
+    padding: 10px; 
     border-radius: 3px; 
     font-weight: 700;
+    text-align: center;
 }
 
 .playlist-nav:hover,
@@ -93,7 +101,8 @@
 }
 
 .trailer{
-    width: 300px;
+    width: 70vw;
+    margin-top: 10px; 
 }
 
 .search-area-wrapper{
@@ -102,7 +111,7 @@
 
 .in-theaters-content, .search-content{
     background-color: white;
-    width: 305px; 
+    width: 85vw; 
     margin: 20px auto 0 auto;
     text-align: center;
 }
@@ -111,7 +120,8 @@
     display: block;
     text-align: center;
     font-weight: 700;
-    font-size: 28px;
+    font-size: 24px;
+    padding: 10px; 
 }
 
 .now-playing-content, .recommendations-page{
@@ -123,6 +133,7 @@
     flex-direction: column;
     overflow-y: auto;
     border-top: 3px dotted rgba(127,209,185);
+    margin-top: 8px; 
 }
 
 .now_playing-button, .search-button{
@@ -130,6 +141,11 @@
     border: 1px solid #0C4767;
     padding: 3px; 
     border-radius: 3px; 
+    height: 25px; 
+}
+
+.userInput, .search-input{
+    height: 25px; 
 }
 
 .now_playing-button:hover,
@@ -146,20 +162,27 @@
     display: block;
 }
 
+.poster-header{
+    padding: 5px; 
+}
+
 .poster-image:hover, .poster-image:focus{
     cursor: pointer;
     border: 3px solid #0C4767;
 }
 
 .search-results, .in-theaters-info{
-    border-bottom: 1px solid gray;
     margin: 10px 2px; 
+}
+
+.in-theaters-info{
+    border-bottom: 1px solid gray;
 }
 
 .recommend-button{
     background-color: white;
     border: 1px solid #0C4767;
-    padding: 3px; 
+    padding: 8px; 
     border-radius: 3px; 
 }
 
@@ -169,24 +192,6 @@
     cursor: pointer;
 }
 
-.page-footer{
-    display: flex;
-    align-items: flex-end;
-    height: 50px;
-    width: 100%;
-    background-color: #7FD1B9;
-    font-size: 14px;
-}
-
-.content-info--author{
-    margin-right: 30px; 
-}
-
-.fab, .icon{
-    margin-right: 10px; 
-    color: #0C4767;
-}
-
 .movie-details{
     display: flex;
     flex-direction: column;
@@ -194,6 +199,7 @@
 
 .movie-details h3,.movie-details p{
     margin: 10px 5px; 
+    padding: 0 10px 0 10px; 
 }
 
 .movie-details__bold{
@@ -275,13 +281,28 @@ and (orientation: landscape){
         margin-top: 100px;
     }
 
+    .trailer-box{
+        width: 95%;
+        margin: 20px auto;
+        height: 450px; 
+        text-align: left;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
+
     .trailer-content{
         display: flex;
         flex-wrap: wrap;
         overflow: auto;
         margin: 10px; 
-        height: 425px;
+        height: 325px;
         justify-content: space-around;
+    }
+
+    .trailer{
+         width: 55vw; 
+         height: 250px; 
+         margin-bottom: 15px; 
     }
 
     .playlist-nav{
@@ -296,6 +317,10 @@ and (orientation: landscape){
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
+    }
+
+    .label-header{
+        font-size: 28px; 
     }
 
     .now-playing-content, .recommendations-page{
@@ -315,7 +340,7 @@ and (orientation: landscape){
     .search-content:focus,
     .trailer-box:hover,
     .trailer-box:focus{
-        box-shadow: 6px -5px 5px 0 gray;
+        box-shadow: 6px -5px 5px 0 rgb(167, 164, 164);
     }
 
     .search-results, .in-theaters-info{
@@ -343,15 +368,6 @@ and (orientation: landscape){
         margin-bottom: 5px; 
     }
 
-    .trailer-box{
-        width: 95%;
-        margin: 20px auto;
-        height: 500px; 
-        text-align: left;
-        margin-bottom: 5px;
-        border-radius: 5px;
-    }
-
     .content-header{
         margin: 10px 0px 0px 30px; 
     }
@@ -368,6 +384,7 @@ and (orientation: landscape){
 
     .now_playing-button, .search-button{
         font-size: 16px;
+        height: 26px;
     }
 
     .search-form{
@@ -386,5 +403,12 @@ and (orientation: landscape){
     .fab{
         font-size: 20px; 
         margin-bottom: 3px; 
+    }
+}
+
+@media only screen and (min-width: 1000px){
+    .trailer{
+         width: 450px; 
+         height: 275px; 
     }
 }

@@ -10,44 +10,41 @@ the latest movies.
 
 Screenshots
 -----------
-Desktop
-![fullpage screenshot](/cinecenter_photos/fullscreen.png "Desktop layout")
+### Desktop
+![fullpage screenshot](cincenter_photos/fullscreen.png "Desktop layout")
 
-Playlist search area
-![playlist selection screen desktop](/cinecenter_photos/playlistdesktopscreencapture.png "playlist selection")
+#### Playlist search area
+![playlist selection screen desktop](cincenter_photos/playlistdesktopscreencapture.png "playlist selection")
 
-Explore new releases or search for your favorite movie
-![search area screen desktop](/cinecenter_photos/search_nowplayingdesktopscreenshot.png "Search and explore movies")
+#### Explore new releases or search for your favorite movie
+![search area screen desktop](cincenter_photos/search_nowplayingdesktopscreenshot.png "Search and explore movies")
 
-Click posters to get more information about the selected movie
-![lightbox pop up with informational text](/cinecenter_photos/infodisplayscreenshot.png "Lightbox movie information")
+#### Click posters to get more information about the selected movie
+![lightbox pop up with informational text](cincenter_photos/infodisplayscreenshot.png "Lightbox movie information")
 
-Mobile
+### Mobile
 
-Potrait
-![portrait landing page](/cinecenter_photos/landingmobile.png "Landing page")
+#### Potrait
+![portrait landing page](cincenter_photos/landingmobile.png "Landing page")
 
-![potrait search area with movie posters](/cinecenter_photos/mobilesearchscreencapture.png "Potrait search movies area")
+![landing page in landscape with welcome text](cincenter_photos/landingmobilelandscape.png "Landscape landing page")
 
-Landscape
-![landing page in landscape with welcome text](/cinecenter_photos/landingmobilelandscape.png "Landscape landing page")
-
-![playlist area in landscape with clickable movie trailers](/cinecenter_photos/playlistlandscape.png "Landscape playlist area")
+![potrait search area with movie posters](cincenter_photos/mobilesearchscreencapture.png "Potrait search movies area")
 
 Built with
 ----------
-*HTML
-*CSS
-*JavaScript
-*jQuery
+* HTML
+* CSS
+* JavaScript
+* jQuery
 
 Features
 ---------
-*Watch movie trailers by playlist
-*Explore new releases by category
-*Search for movies
-*Get information about selected movies
-*Explore similar titles based on search results
+* Watch movie trailers by playlist
+* Explore new releases by category
+* Search for movies
+* Get information about selected movies
+* Explore similar titles based on search results
 
 Live Demo
 ---------
