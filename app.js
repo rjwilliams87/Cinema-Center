@@ -24,15 +24,7 @@ const apiStore = {
     },
 };
 
-// variables
-  const trailerPage = $('.trailer-content');
-  const playlistButton = $('.js-playlist-btn');
-  const recommendedPage = $('.recommendations-page');
-  const inTheatersPage = $('.now-playing-content');
-  const lightboxDisplay = $('.lightbox');
-  const lightboxWrapper = $('#wrapper');
 
-// youtube api
 function getYouTubeApiData(callback){
     $.getJSON(apiStore.YouTube.URL, apiStore.YouTube.settings, callback);
   }
@@ -48,11 +40,11 @@ function renderVideoResults(result){
 
 function displayYoutubeData(data){
     const videoResults = data.items.map((item) => renderVideoResults(item));
-    trailerPage.html(videoResults);
+    $('.trailer-content').html(videoResults);
   }
 
 function handleYouTubePlaylistButton(){
-  playlistButton.click(function(e){
+  $('.js-playlist-btn').click(function(e){
     e.preventDefault();
     const playlistId = $(this).attr('id')
     apiStore.YouTube.settings.playlistId = `${playlistId}`;
@@ -64,16 +56,15 @@ function fetch(url, callback){
     $.getJSON(url, apiStore.TMDB.settings, callback)
 }  
 
-  function renderTMDBSearchResults(result){
-    const {title, id, poster_path} = result;
-    return `
-      <div class="search-results">
-        <h2 class="poster-header">${title}</h2>
-        <a href="#" id="${id}" title="Click for more info"><img class="poster-image" src="https://image.tmdb.org/t/p/w300/${poster_path}" alt="poster ${title}"/></a>
-        <button id="movie${id}" class="js-search-recommended-button recommend-button" type="submit">View Similar Titles</button>
-      </div>
-    `;
-  }
+function renderTMDBSearchResults(result){
+  const {title, id, poster_path} = result;
+  return `
+    <div class="search-results">
+      <h2 class="poster-header">${title}</h2>
+      <a href="#" id="${id}" title="Click for more info"><img class="poster-image" src="https://image.tmdb.org/t/p/w300/${poster_path}" alt="poster ${title}"/></a>
+      <button id="movie${id}" class="js-search-recommended-button recommend-button" type="submit">View Similar Titles</button>
+    </div>`;
+}
 
 function renderTMDBResults (result){
   const {title, id, release_date, poster_path} = result;
@@ -83,7 +74,7 @@ function renderTMDBResults (result){
         <a href="#" id="${id}" title="click for more info"><img class="poster-image" src="https://image.tmdb.org/t/p/w300/${poster_path}" alt="poster ${title}"></a>
     </div>
     `;
-  }
+}
 
 function renderTMDBMovieDetails(result){
   const {title, vote_average, runtime, release_date, overview} = result
@@ -95,84 +86,73 @@ function renderTMDBMovieDetails(result){
     <p><span class="movie-details__bold">TMDB Average Score:</span> ${vote_average}</p>
     <p><span class="movie-details__bold">Overview:</span> ${overview}</p>
     <button class="exit-btn" aria-label="press esc button to exit">Exit (esc)</button>
-  </div>
-  `;
+  </div>`;
 }
 
-  function displayTMDBSearchData(data){
-    const searchResults = data.results.map((item, index)=> 
-        renderTMDBSearchResults(item));
-        recommendedPage.html(searchResults);
-  }
+function displayTMDBSearchData(data){
+  const searchResults = data.results.map((item, index)=> renderTMDBSearchResults(item));
+  $('.recommendations-page').html(searchResults);
+}
 
-  function displayPlayingData(data){
-      const newReleaseResults = data.results.map((item)=> renderTMDBResults(item)).sort();
-      inTheatersPage.html(newReleaseResults);
-  }
+function displayPlayingData(data){
+    const newReleaseResults = data.results.map((item)=> renderTMDBResults(item)).sort();
+    $('.now-playing-content').html(newReleaseResults);
+}
 
 function displayMovieDetailsData(data){
   const results = renderTMDBMovieDetails(data);
   $('.lightbox').html(results);
 }
 
-  function handleNowPlayingSearchButton(){
-      $('.now-playing-form').submit(function(e){
-          e.preventDefault();
-          const queryTarget = $(this).find('.userInput');
-          const query = queryTarget.val();
-          fetch(`${apiStore.TMDB.URL}/${query}`, displayPlayingData);
-      })
-  }
+function handleNowPlayingSearchButton(){
+  $('.now-playing-form').submit(function(e){
+    e.preventDefault();
+    const queryTarget = $(this).find('.userInput');
+    const query = queryTarget.val();
+    fetch(`${apiStore.TMDB.URL}/${query}`, displayPlayingData);
+  });
+}
 
-  function handleSearchMovieButton(){
-    $('.js-search-form').submit(function(e){
-      e.preventDefault();
-      const queryTarget = $(this).find('.js-searchBar');
-      const query = queryTarget.val();
-      queryTarget.val('');
-      apiStore.TMDB.settings.query = query;
-      fetch(apiStore.TMDB.Search_URL, displayTMDBSearchData);
-    });
-  }
+function handleSearchMovieButton(){
+  $('.js-search-form').submit(function(e){
+    e.preventDefault();
+    const queryTarget = $(this).find('.js-searchBar');
+    const query = queryTarget.val();
+    queryTarget.val('');
+    apiStore.TMDB.settings.query = query;
+    fetch(apiStore.TMDB.Search_URL, displayTMDBSearchData);
+  });
+}
   
-  function handlerecommendationButton(){
-    recommendedPage.on('click', '.js-search-recommended-button', function(e){
-      e.preventDefault();
-      const movieId = $(this).attr('id').match(/\d+/g).join('');
-      fetch(`${apiStore.TMDB.URL}/${movieId}/recommendations`, displayTMDBSearchData);
-    })
-  }
+function handlerecommendationButton(){
+  $('.recommendations-page').on('click', '.js-search-recommended-button', function(e){
+    e.preventDefault();
+    const movieId = $(this).attr('id').match(/\d+/g).join('');
+    fetch(`${apiStore.TMDB.URL}/${movieId}/recommendations`, displayTMDBSearchData);
+  });
+}
 
-  function handleScrollButton(){
-      $('.js-scroll-to-content').click(function(e){
-          e.preventDefault();
-          $('html,body').animate({
-              scrollTop: $('.movie-content').offset().top
-          }, 800);
-      });
-  }
-
-  function handleInformationDisplay(){
-    $('.clickable-content').on('click', 'a', function(event){
-      event.preventDefault();
-      const movieId = $(this).attr('id');
-      $('.media-wrapper').append(`<div id="wrapper"></div>`);
-      $('#wrapper').fadeIn(function(){
-        $('.search-area-wrapper').append(`<div class="lightbox" aria-live="assertive"></div>`);
-        $('.lightbox').fadeIn();
-        fetch(`https://api.themoviedb.org/3/movie/${movieId}`, displayMovieDetailsData);
-      });
+function handleMovieInformationDisplay(){
+  $('.clickable-content').on('click', 'a', function(event){
+    event.preventDefault();
+    const movieId = $(this).attr('id');
+    $('.media-wrapper').append(`<div id="wrapper"></div>`);
+    $('#wrapper').fadeIn(function(){
+      $('.search-area-wrapper').append(`<div class="lightbox" aria-live="assertive"></div>`);
+      $('.lightbox').fadeIn();
+      fetch(`https://api.themoviedb.org/3/movie/${movieId}`, displayMovieDetailsData);
     });
-  }
+  });
+}
 
-  function handleExitButton(){
-    $('body').on('click', '.exit-btn', function(e){
-      e.preventDefault();
-      $('.lightbox').fadeOut(function(){
-        $('#wrapper').remove();
-      });
+function handleExitLightboxButton(){
+  $('body').on('click', '.exit-btn', function(e){
+    e.preventDefault();
+    $('.lightbox').fadeOut(function(){
+      $('#wrapper').remove();
     });
-  }
+  });
+}
 
 function handleLightboxEscButton(){
   $('body').keyup(function(e){
@@ -180,6 +160,15 @@ function handleLightboxEscButton(){
       $('.lightbox').fadeOut(function(){
         $('#wrapper').remove()});
     }
+  });
+}
+
+function handleScrollButton(){
+  $('.js-scroll-to-content').click(function(e){
+      e.preventDefault();
+      $('html,body').animate({
+          scrollTop: $('.movie-content').offset().top
+      }, 800);
   });
 }
   
@@ -194,6 +183,6 @@ handleScrollButton();
 handleNowPlayingSearchButton();
 handleSearchMovieButton();
 handlerecommendationButton();
-handleExitButton();
-handleInformationDisplay();
+handleExitLightboxButton();
+handleMovieInformationDisplay();
 handleLightboxEscButton();

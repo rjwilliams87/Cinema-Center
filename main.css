@@ -11,7 +11,7 @@
 }
 
 .page-header{
-    background-image: linear-gradient(rgba(12, 71, 103, 0.9), rgba(165,42,42,0.7)), url(https://cdn.pixabay.com/photo/2015/09/02/12/45/movie-918655_1280.jpg);
+    background: linear-gradient(rgba(12, 71, 103, 0.9), rgba(165,42,42,0.7)), url(movie-918655_1920.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -50,7 +50,6 @@
 .trailer-box{
     width: 305px;
     text-align: center;
-    color: #0C4767;
     background-color: white;
     margin: 0 auto;
     padding-bottom: 5px; 
@@ -176,7 +175,7 @@
     height: 50px;
     width: 100%;
     background-color: #7FD1B9;
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .content-info--author{
@@ -378,6 +377,10 @@ and (orientation: landscape){
     .lightbox{
         width: 400px; 
         margin: 75px auto; 
+    }
+
+    .page-footer{
+        font-size: 20px;
     }
 
     .fab{
