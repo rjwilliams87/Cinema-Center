@@ -1,4 +1,5 @@
-#Cinema Center
+Cinema Center
+=============
 A single web page to watch the latest movie trailers, get information about new releases and find movie recommendations. 
 
 Inspiration
@@ -50,7 +51,7 @@ Features
 
 Live Demo
 ---------
-Demo: https://rjwilliams87.github.io/api_capstone/
+Demo: https://rjwilliams87.github.io/Cinema-Center/
 
 Author
 -------
