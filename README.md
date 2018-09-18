@@ -24,7 +24,6 @@ Screenshots
 
 ### Mobile
 
-#### Potrait
 ![portrait landing page](cincenter_photos/landingmobile.png "Landing page")
 
 ![landing page in landscape with welcome text](cincenter_photos/landingmobilelandscape.png "Landscape landing page")
